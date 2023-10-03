@@ -47,16 +47,15 @@ public class AreaCheckServlet extends HttpServlet {
             } else {
                 result = HitType.WRONG_DATA.getHitArea();
             }
-        } catch (NumberFormatException ex){
-            log("Exception");
-        } finally {
             coordinates = new Coordinates(x, y, r);
             hitData = new HitData(coordinates, dtf.format(new Date()), (double) (System.nanoTime() - startExec) / 1000000, result);
             hitDataCollectionManager.add(hitData);
             getServletContext().setAttribute("collection", hitDataCollectionManager);
             resp.setStatus(307);
+        } catch (NumberFormatException ex){
+            log("Number Exception");
+            resp.setStatus(400);
         }
-
     }
     private String checkArea(final double x, final double y, final double r){
         if (firstArea(x, y, r)){

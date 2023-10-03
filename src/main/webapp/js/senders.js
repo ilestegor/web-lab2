@@ -20,10 +20,19 @@ function post_req(link, event, data){
     xhr.send(data);
 
     xhr.onload = () => {
-        if (xhr.readyState === 4 && xhr.status === 307){
-            window.location.href = 'result.jsp';
-        } else {
-            window.location.href = '';
+        if (xhr.readyState === 4){
+            switch (xhr.status){
+                case 307:
+                    window.location.href = 'result.jsp';
+                    break;
+                case 400:
+                    window.location.href = '400.jsp';
+                    break;
+                default:
+                    window.location.href = "";
+
+
+            }
         }
     }
 }
